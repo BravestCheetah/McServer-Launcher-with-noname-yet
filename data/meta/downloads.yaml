@@ -1,0 +1,15 @@
+softwares:
+  - name: vanilla
+    versions:
+    - 1.21.6
+
+
+  - name: paper
+    versions: 
+    - 1.21.6
+    - 1.21.5
+    - 1.21.4
+
+    api-link:  https://api.papermc.io/v2/projects/paper/versions/1.21.4/builds/232/downloads/paper-1.21.4-232.jar
+
+
