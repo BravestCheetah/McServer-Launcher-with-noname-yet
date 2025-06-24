@@ -19,13 +19,24 @@ class _server_downloads():
         except Exception as e:
             raise LoadDownloadsDataError(f"An Error Occured When Loading downloads.yaml: {e}")
 
+
+
     def get_json(self, url: str) -> dict:
         resp = req.get(url)
 
         if resp.ok: return resp.json()
         else: raise RequestJsonFailedError(f"An Error Occured When Getting JSON From Url {url}"); return {}
 
+
+
     def vanilla(self, ver: str) -> pathlib.Path:
+        """
+        Proccess:
+        get version manifest from the minecraft servers
+        get the manifest url for the version we want from the version manifest
+        get the server download from the versions own manifest
+        return the download link
+        """
 
         manifest_url = self.download_data["softwares"]["vanilla"]["version-manifest"]
         ver_manifest = self.get_json(manifest_url)
