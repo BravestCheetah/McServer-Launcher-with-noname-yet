@@ -26,4 +26,9 @@ def page(page: str = "home"):
     index.render(title=TITLE, page=page, servers=__get_servers(), debug=debug)
 
 
-ui.run(title=f"{TITLE}")
+def main():
+    ui.run(title=f"{TITLE}")
+
+
+if __name__ in {"__main__", "__mp_main__"}:
+    main()

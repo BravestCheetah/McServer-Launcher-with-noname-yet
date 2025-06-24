@@ -5,10 +5,15 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+    "click>=8.2.1",
     "nicegui>=2.20.0",
     "python-slugify>=8.0.4",
     "pyyaml>=6.0.2",
 ]
+
+[project.scripts]
+mcserver = "mcserver.cli:main"
+
 
 [dependency-groups]
 dev = [

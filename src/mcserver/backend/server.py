@@ -4,7 +4,7 @@ import subprocess
 
 from slugify import slugify
 
-from mcserver.backend.server.downloader import get_downloader
+from mcserver.backend.downloader import get_downloader
 from mcserver.settings import SERVER_ROOT
 
 
@@ -44,7 +44,7 @@ class Server:
             f.write("eula=true")
 
     def start_server(self):
-        self.process = subprocess.Popen(["java", "-jar", "server.jar"], cwd=self.path)
+        self.process = subprocess.run(["java", "-jar", "server.jar"], cwd=self.path)
 
     def kill_server(self):
         if platform.system() == "Windows":

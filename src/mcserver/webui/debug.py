@@ -1,6 +1,6 @@
 from nicegui import ui
 
-from mcserver.backend.software import get_software_names
+from mcserver.backend.data import get_software_names
 
 
 def render():

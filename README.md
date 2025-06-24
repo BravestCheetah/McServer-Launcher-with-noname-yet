@@ -26,6 +26,15 @@ to make sure the package is installed on edit mode:
 uv sync
 ```
 
+For development, there's also the option of running just the `cli` for quickly
+executing specific servers, to do so use `uv's` support for scripts and provide
+the required parameters as such:
+
+```bash
+uv run mcserver --name potato --software vanilla --version 1.21.6
+```
+
+
 ### Testing
 
 Tests are implemented using [pytest](https://docs.pytest.org/en/stable/) and
