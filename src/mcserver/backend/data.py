@@ -14,3 +14,7 @@ def get_software_data():
 
 def get_software_names():
     return list(get_software_data().keys())
+
+
+def get_software_metadata(software: str) -> dict:
+    return get_software_data()[software]

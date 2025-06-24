@@ -1,57 +1,50 @@
-import pathlib
 import platform
-import re
 import signal
 import subprocess
 
-import requests as req
+from slugify import slugify
 
-from mcserver.backend.server.server_data import data
+from mcserver.backend.server.downloader import get_downloader
+from mcserver.settings import SERVER_ROOT
 
 
-class server:
+class Server:
     def __init__(
         self,
-        path,
-        metadata: list = ["My Awesome Server!", "This MOTD is awesome!"],
-        serverdata: list = ["Vanilla", "1.21.6"],
+        software: str,
+        version: str,
+        name: str,
+        motd: str = "",
     ) -> None:
-        self.meta = metadata
-        self.servermeta = serverdata
+        self.name = name
+        self.motd = motd
+        self.software = software
+        self.version = version
 
-        self.path = path
+        # self.server_data = data()
 
-        self.path_name = metadata[0]
-        self.path_name = self.path_name.strip().lower()
-        self.path_name = re.sub(r'[<>:"/\\|?*\s]+', "_", self.path_name).strip("_")
+    @property
+    def path(self):
+        return SERVER_ROOT / slugify(self.name)
 
-        self.server_data = data()
+    @property
+    def jar_file(self):
+        return self.path / "server.jar"
 
     def download_jar(self):
-        download_url = self.server_data.get_jar_download(
-            self.servermeta[0], self.servermeta[1]
-        )
-        data = req.get(download_url).content
-
-        target = pathlib.Path.joinpath(self.path, self.path_name, "server.jar")
-
-        pathlib.Path.mkdir(pathlib.Path.joinpath(self.path, self.path_name))
-        with open(target, "wb") as f:
-            f.write(data)
+        downloader = get_downloader(self.software)
+        downloader.download(self.version, self.jar_file)
 
     def install_server(self):
         self.download_jar()
 
-        eula_path = target = pathlib.Path.joinpath(
-            self.path, self.path_name, "eula.txt"
-        )
+        eula_path = self.path / "eula.txt"
+
         with open(eula_path, "w") as f:
             f.write("eula=true")
 
     def start_server(self):
-        cwd = pathlib.Path.joinpath(self.path, self.path_name)
-
-        self.process = subprocess.Popen(["java", "-jar", "server.jar"], cwd=cwd)
+        self.process = subprocess.Popen(["java", "-jar", "server.jar"], cwd=self.path)
 
     def kill_server(self):
         if platform.system() == "Windows":
@@ -63,5 +56,4 @@ class server:
 
     def restart_server(self):
         self.kill_server()
-
         self.start_server()
