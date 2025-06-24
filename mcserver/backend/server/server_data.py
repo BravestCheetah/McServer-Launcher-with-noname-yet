@@ -60,6 +60,14 @@ class data():
     def __init__(self) -> None:
         self.downloads = _server_downloads()
 
-    def get_jar_download(software, ver) -> None:
-        pass
+        self._software_commands = {
+            "vanilla": self.downloads.vanilla
+        }
 
+    def get_jar_download(self, software, ver) -> None:
+        command = self._software_commands[software]
+        return command(ver)
+
+
+d = data()
+print(d.get_jar_download("1.13"))
