@@ -1,21 +1,14 @@
-import yaml
 from nicegui import ui
 
-from mcserver.settings import SOFTWARE_DATA_FILE
+from mcserver.backend.software import get_software_names
 
 
-def _get_software_list():
-    with open(SOFTWARE_DATA_FILE, "r") as f:
-        data = yaml.load(f, Loader=yaml.FullLoader)
-    return list(data["softwares"].keys())
-
-
-def content():
+def render():
     ui.label("DEBUG")
 
     ui.label("software")
     ui.select(
-        options=_get_software_list(),
+        options=get_software_names(),
         with_input=True,
         on_change=lambda e: ui.notify(e.value),
     ).classes("w-40")

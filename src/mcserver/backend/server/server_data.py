@@ -1,33 +1,42 @@
 import requests as req
 import yaml
+
 try:
-    from yaml import CLoader as Loader, CDumper as Dumper
+    from yaml import CDumper as Dumper
+    from yaml import CLoader as Loader
 except ImportError:
-    from yaml import Loader, Dumper
+    pass
 import pathlib
-from ..root_path import get_root_path
+
 from ..misc.errors import *
+from ..root_path import get_root_path
 
 
-
-class _server_downloads():
+class _server_downloads:
     def __init__(self):
-
         try:
-            with open(pathlib.Path.joinpath(get_root_path(), "data", "meta", "downloads.yaml"), "r") as f:
+            with open(
+                pathlib.Path.joinpath(
+                    get_root_path(), "data", "meta", "downloads.yaml"
+                ),
+                "r",
+            ) as f:
                 self.download_data = yaml.load(f, Loader=yaml.FullLoader)
         except Exception as e:
-            raise LoadDownloadsDataError(f"An Error Occured When Loading downloads.yaml: {e}")
-
-
+            raise LoadDownloadsDataError(
+                f"An Error Occured When Loading downloads.yaml: {e}"
+            )
 
     def get_json(self, url: str) -> dict:
         resp = req.get(url)
 
-        if resp.ok: return resp.json()
-        else: raise RequestJsonFailedError(f"An Error Occured When Getting JSON From Url {url}"); return {}
-
-
+        if resp.ok:
+            return resp.json()
+        else:
+            raise RequestJsonFailedError(
+                f"An Error Occured When Getting JSON From Url {url}"
+            )
+            return {}
 
     def vanilla(self, ver: str) -> pathlib.Path:
         """
@@ -55,14 +64,11 @@ class _server_downloads():
         return jar_download
 
 
-
-class data():
+class data:
     def __init__(self) -> None:
         self.downloads = _server_downloads()
 
-        self._software_commands = {
-            "vanilla": self.downloads.vanilla
-        }
+        self._software_commands = {"vanilla": self.downloads.vanilla}
 
     def get_jar_download(self, software, ver) -> None:
         command = self._software_commands[software]

@@ -2,7 +2,7 @@ import argparse
 
 from nicegui import ui
 
-from mcserver.webui import home
+from mcserver.webui import index
 
 TITLE = "MC Server"
 
@@ -22,8 +22,8 @@ def __get_servers() -> list[str]:
 
 @ui.page("/")
 @ui.page("/{page}")
-def index(page: str = "home"):
-    home.render(title=TITLE, page=page, servers=__get_servers(), debug=debug)
+def page(page: str = "home"):
+    index.render(title=TITLE, page=page, servers=__get_servers(), debug=debug)
 
 
 ui.run(title=f"{TITLE}")
