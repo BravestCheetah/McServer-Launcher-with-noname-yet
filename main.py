@@ -19,4 +19,4 @@ def index():
     home.render(title=TITLE, servers=__get_servers())
 
 
-ui.run(title="{TITLE}")
+ui.run(title=f"{TITLE}")
