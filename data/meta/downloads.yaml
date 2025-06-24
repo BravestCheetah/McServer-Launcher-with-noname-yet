@@ -1,7 +1,8 @@
 softwares:
   - name: vanilla
-    versions:
-    - 1.21.6
+    
+    version-manifest: https://piston-meta.mojang.com/mc/game/version_manifest_v2.json
+
 
 
   - name: paper
@@ -11,5 +12,3 @@ softwares:
     - 1.21.4
 
     api-link:  https://api.papermc.io/v2/projects/paper/versions/1.21.4/builds/232/downloads/paper-1.21.4-232.jar
-
-
