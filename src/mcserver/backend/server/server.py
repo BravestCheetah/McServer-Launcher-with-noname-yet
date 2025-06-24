@@ -9,7 +9,6 @@ class server():
         self.meta = metadata
         self.servermeta = serverdata
 
-        self.serverdata = server
         self.path = path
 
         self.path_name = metadata[0]
@@ -20,24 +19,26 @@ class server():
 
     def download_jar(self):
 
-        download_url = self.server_data.get_jar_download(self.serverdata[0], self.serverdata[1])
+        download_url = self.server_data.get_jar_download(self.servermeta[0], self.servermeta[1])
         data = req.get(download_url).content
 
-        target = pathlib.Path.joinpath(self.path, self.path_name, server.jar)
+        target = pathlib.Path.joinpath(self.path, self.path_name, "server.jar")
 
+        pathlib.Path.mkdir(pathlib.Path.joinpath(self.path, self.path_name))
         with open(target, "wb") as f:
             f.write(data)
         
         
 
-    def install_server():
+    def install_server(self):
         pass
 
-    def start_server():
+    def start_server(self):
         pass
 
-    def kill_server():
+    def kill_server(self):
         pass
 
-    def restart_server():
+    def restart_server(self):
         pass
+
