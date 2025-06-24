@@ -1,8 +1,10 @@
 from mcserver.backend.server.server_data import data
 import requests as req
+import platform
 import re
 import pathlib
-
+import subprocess
+import signal
 class server():
     def __init__(self, path, metadata: list = ["My Awesome Server!", "This MOTD is awesome!"], serverdata: list = ["vanilla", "1.21.6"]) -> None:
         
@@ -31,14 +33,36 @@ class server():
         
 
     def install_server(self):
-        pass
+
+        self.download_jar()
+
+        eula_path = target = pathlib.Path.joinpath(self.path, self.path_name, "eula.txt")
+        with open(eula_path, "w") as f:
+            f.write("eula=true")
 
     def start_server(self):
-        pass
+        cwd = pathlib.Path.joinpath(self.path, self.path_name)
+
+        self.process = subprocess.Popen(
+            ["java", "-jar", "server.jar"],
+            cwd=cwd
+        )
+
+
 
     def kill_server(self):
-        pass
+        
+        if platform.system() == "Windows":
+            self.process.send_signal(signal.CTRL_BREAK_EVENT)
+        else:
+            self.process.send_signal(signal.SIGINT)
+
+        self.process.wait()
+
+
 
     def restart_server(self):
-        pass
+        self.kill_server()
+
+        self.start_server()
 
