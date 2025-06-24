@@ -1,8 +1,12 @@
 import requests as req
 import yaml
+try:
+    from yaml import CLoader as Loader, CDumper as Dumper
+except ImportError:
+    from yaml import Loader, Dumper
 import pathlib
-from mcserver.backend.root_path import get_root_path
-from mcserver.backend.misc.errors import *
+from ..root_path import get_root_path
+from ..misc.errors import *
 
 
 
@@ -52,34 +56,18 @@ class _server_downloads():
 
 
 
-    def paper(self, ver: str) -> pathlib.Path:
-
-        data_url = self.download_data["softwares"]["paper"]["versions-data"]
-
-        ver_data_url = f"{data_url}{ver}"
-        ver_data = self.get_json(ver_data_url)
-
-        latest_build = ver_data["builds"][-1]
-        build_info_url = f"{data_url}{ver}/builds/{latest_build}"
-        build_info = self.get_json(build_info_url)
-
-        build_name = build_info["downloads"]["application"]["name"]
-        build_download = f"{data_url}{ver}/builds/{latest_build}/downloads/{build_name}"
-
-        return build_download
-        
-
-
-
 class data():
     def __init__(self) -> None:
         self.downloads = _server_downloads()
 
         self._software_commands = {
-            "vanilla": self.downloads.vanilla,
-            "paper": self.downloads.paper
+            "vanilla": self.downloads.vanilla
         }
 
     def get_jar_download(self, software, ver) -> None:
         command = self._software_commands[software]
         return command(ver)
+
+
+d = data()
+print(d.get_jar_download("1.13"))

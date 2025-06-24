@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 from mcserver.backend.server.server_data import data
 import requests as req
 import platform
@@ -5,10 +6,13 @@ import re
 import pathlib
 import subprocess
 import signal
+=======
+>>>>>>> Stashed changes
 class server():
-    def __init__(self, path, metadata: list = ["My Awesome Server!", "This MOTD is awesome!"], serverdata: list = ["vanilla", "1.21.6"]) -> None:
-        
+    def __init__(self, path, metadata: list = ["My Awesome Server!", "This MOTD is awesome!"], serverdata: list = ["Vanilla", "1.21.6"]) -> None:
+
         self.meta = metadata
+<<<<<<< Updated upstream
         self.servermeta = serverdata
 
         self.path = path
@@ -20,6 +24,13 @@ class server():
         self.server_data = data()
 
     def download_jar(self):
+=======
+        self.serverdata = server
+        self.path = path
+
+    def download_jar():
+        pass
+>>>>>>> Stashed changes
 
         download_url = self.server_data.get_jar_download(self.servermeta[0], self.servermeta[1])
         data = req.get(download_url).content
@@ -29,8 +40,8 @@ class server():
         pathlib.Path.mkdir(pathlib.Path.joinpath(self.path, self.path_name))
         with open(target, "wb") as f:
             f.write(data)
-        
-        
+
+
 
     def install_server(self):
 
@@ -51,7 +62,7 @@ class server():
 
 
     def kill_server(self):
-        
+
         if platform.system() == "Windows":
             self.process.send_signal(signal.CTRL_BREAK_EVENT)
         else:
@@ -65,4 +76,3 @@ class server():
         self.kill_server()
 
         self.start_server()
-
