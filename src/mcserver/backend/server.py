@@ -16,6 +16,7 @@ class Server:
         name: str,
         motd: str = "",
     ) -> None:
+        
         self.name = name
         self.motd = motd
         self.software = software

@@ -1,8 +1,9 @@
 from functools import cache
-
 import yaml
+from slugify import slugify
 
-from mcserver.settings import SOFTWARE_DATA_FILE
+from mcserver.errors import ServerAlreadyExistsError
+from mcserver.settings import SOFTWARE_DATA_FILE, SERVER_DATA_FILE
 
 
 @cache
@@ -18,3 +19,51 @@ def get_software_names():
 
 def get_software_metadata(software: str) -> dict:
     return get_software_data()[software]
+
+
+
+def load_server_data() -> dict:
+
+    with open(SERVER_DATA_FILE, "r") as f:
+        data = yaml.load(f, Loader=yaml.FullLoader)
+
+    return data
+
+
+def save_server_data(data) -> dict:
+    
+    with open(SERVER_DATA_FILE, "w") as f:
+        data = yaml.dump(f)
+
+
+#   NOTICE TO DEVS: TO MAKE IT EASIER TO QUICKLY EDIT DIFFERENT THINGS ALL EDITS START WITH A COMPLETE LOAD AND END IN A COMPLETE SAVE.
+
+def add_server(name, motd, version, software) -> None:
+
+    data = load_server_data()
+
+    if slugify(name) in data:
+        raise ServerAlreadyExistsError("There was an error adding a server to the server metadata: Server Already Exists")
+        return
+    
+    data_name = slugify(name)
+
+    server_data = {
+        "name": name,
+        "motd": motd,
+        "version": version,
+        "software": software,
+    }
+
+    data[data_name] = server_data
+
+    save_server_data(data)
+
+
+def edit_server(name, key, value) -> None:
+    
+    data = load_server_data()
+
+    data[name][key] = value
+
+    save_server_data(data)
