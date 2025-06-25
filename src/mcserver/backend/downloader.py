@@ -88,6 +88,7 @@ class PaperDownloader(ServerDownloader):
 
 DOWNLOADERS = {
     "vanilla": VanillaDownloader,
+    "paper": PaperDownloader,
 }
 
 
