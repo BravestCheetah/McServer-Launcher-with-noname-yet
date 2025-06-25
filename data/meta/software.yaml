@@ -4,3 +4,8 @@ softwares:
 
   paper:
     versions-data:  https://api.papermc.io/v2/projects/paper/versions/
+
+  leaf:
+    leaf-data: https://api.leafmc.one/v2/projects/leaf/
+    version-data: https://api.leafmc.one/v2/projects/leaf/versions/
+    

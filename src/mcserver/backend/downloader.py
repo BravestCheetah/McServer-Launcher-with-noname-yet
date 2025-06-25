@@ -36,6 +36,15 @@ class ServerDownloader:
 
 
 
+class TemplateDownloader(ServerDownloader):
+    def get_release_data(self, manifest: dict, version: str) -> dict:
+        pass
+
+
+    def get_url(self, version: str) -> str:
+        pass
+
+
 class VanillaDownloader(ServerDownloader):
     def get_release_data(self, manifest: dict, version: str) -> dict:
         for v in manifest["versions"]:
@@ -67,9 +76,9 @@ class VanillaDownloader(ServerDownloader):
 
 
 class PaperDownloader(ServerDownloader):
-    def get_release_data(self, manifest: dict, version: str) -> dict:
+    def get_release_data(self, version: str) -> dict:
 
-        data_url = get_software_metadata["versions-data"]
+        data_url = get_software_metadata["paper"]["versions-data"]
 
         ver_data_url = f"{data_url}{version}"
         ver_data = self.get_json(ver_data_url)
@@ -89,9 +98,9 @@ class PaperDownloader(ServerDownloader):
         return build_download url
         """
 
-        data_url = self.download_data["softwares"]["paper"]["versions-data"]
+        data_url = get_software_metadata["paper"]["versions-data"]
 
-        build_info = self.get_release_data()
+        build_info = self.get_release_data(version)
         latest_build = build_info["builds"][-1]
 
         build_name = build_info["downloads"]["application"]["name"]
@@ -101,9 +110,44 @@ class PaperDownloader(ServerDownloader):
 
 
 
+class LeafDownloader(ServerDownloader):
+    def get_release_data(self, version: str) -> dict:
+        data_url = get_software_metadata["leaf"]["versions-data"]
+
+        ver_data_url = f"{data_url}{version}"
+        ver_data = self.get_json(ver_data_url)
+
+        latest_build = ver_data["builds"][-1]
+        build_info_url = f"{data_url}{version}/builds/{latest_build}"
+
+        build_info = self.get_json(build_info_url)
+        return build_info
+
+
+    def get_url(self, version: str) -> str:
+        """
+        process:
+        get latest build using api.leafmc.one
+        construct download url using version and build id
+        return build_download url
+        """
+
+        data_url = get_software_metadata["leaf"]["versions-data"]
+
+        build_info = self.get_release_data(version)
+        latest_build = build_info["builds"][-1]
+
+        build_name = build_info["downloads"]["primary"]["name"]
+        build_download = f"{data_url}{version}/builds/{latest_build}/downloads/{build_name}"
+
+        return build_download
+
+
+
 DOWNLOADERS = {
     "vanilla": VanillaDownloader,
     "paper": PaperDownloader,
+    "leaf": LeafDownloader,
 }
 
 
