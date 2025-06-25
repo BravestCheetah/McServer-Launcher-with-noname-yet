@@ -5,6 +5,7 @@ from mcserver.backend.data import get_software_metadata
 from mcserver.errors import UnknownSoftwareError, UnknownVersionError, RequestJsonFailedError
 
 
+
 class ServerDownloader:
     def get_url(self, version: str) -> str:
         raise NotImplementedError
@@ -21,6 +22,7 @@ class ServerDownloader:
             )
             return {}
 
+
     def download(self, version: str, path: pathlib.Path) -> pathlib.Path:
         path.parent.mkdir(parents=True, exist_ok=True)
         url = self.get_url(version)
@@ -33,6 +35,7 @@ class ServerDownloader:
         return path
 
 
+
 class VanillaDownloader(ServerDownloader):
     def get_release_data(self, manifest: dict, version: str) -> dict:
         for v in manifest["versions"]:
@@ -40,6 +43,7 @@ class VanillaDownloader(ServerDownloader):
                 return v
         else:
             raise UnknownVersionError(version)
+
 
     def get_url(self, version: str) -> str:
         """
@@ -60,8 +64,11 @@ class VanillaDownloader(ServerDownloader):
 
         return release_manifest["downloads"]["server"]["url"]
 
+
+
 class PaperDownloader(ServerDownloader):
     def get_release_data(self, manifest: dict, version: str) -> dict:
+
         data_url = get_software_metadata["versions-data"]
 
         ver_data_url = f"{data_url}{version}"
@@ -75,6 +82,13 @@ class PaperDownloader(ServerDownloader):
 
 
     def get_url(self, version: str) -> str:
+        """
+        process:
+        get latest build using api.papermc.io
+        construct download url using version and build id
+        return build_download url
+        """
+
         data_url = self.download_data["softwares"]["paper"]["versions-data"]
 
         build_info = self.get_release_data()
@@ -86,10 +100,12 @@ class PaperDownloader(ServerDownloader):
         return build_download
 
 
+
 DOWNLOADERS = {
     "vanilla": VanillaDownloader,
     "paper": PaperDownloader,
 }
+
 
 
 def get_downloader(software: str) -> ServerDownloader:
