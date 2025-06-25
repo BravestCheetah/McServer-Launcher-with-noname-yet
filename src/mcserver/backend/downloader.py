@@ -49,6 +49,22 @@ class VanillaDownloader(ServerDownloader):
 
         return release_manifest["downloads"]["server"]["url"]
 
+class PaperDownloader(ServerDownloader):
+    def get_url(self, version: str):
+        data_url = self.download_data["softwares"]["paper"]["versions-data"]
+
+        ver_data_url = f"{data_url}{ver}"
+        ver_data = self.get_json(ver_data_url)
+
+        latest_build = ver_data["builds"][-1]
+        build_info_url = f"{data_url}{ver}/builds/{latest_build}"
+        build_info = self.get_json(build_info_url)
+
+        build_name = build_info["downloads"]["application"]["name"]
+        build_download = f"{data_url}{ver}/builds/{latest_build}/downloads/{build_name}"
+
+        return build_download
+
 
 DOWNLOADERS = {
     "vanilla": VanillaDownloader,
