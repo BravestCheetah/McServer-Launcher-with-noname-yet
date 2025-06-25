@@ -120,7 +120,7 @@ class LeafDownloader(ServerDownloader):
         build_info_url = f"{data_url}{version}/builds/{latest_build}"
 
         build_info = self.get_json(build_info_url)
-        return build_info
+        return build_info, latest_build
 
 
     def get_url(self, version: str) -> str:
@@ -133,8 +133,7 @@ class LeafDownloader(ServerDownloader):
 
         data_url = get_software_metadata("leaf")["versions-data"]
 
-        build_info = self.get_release_data(version)
-        latest_build = build_info["builds"][-1]
+        build_info, latest_build = self.get_release_data(version)
 
         build_name = build_info["downloads"]["primary"]["name"]
         build_download = f"{data_url}{version}/builds/{latest_build}/downloads/{build_name}"
