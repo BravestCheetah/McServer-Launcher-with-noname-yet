@@ -6,8 +6,8 @@ def test_server_creation():
     from mcserver.backend.data import load_server_data, rm_server
 
 
-    software = "vanilla"
-    version = "1.21.6"
+    software = "paper"
+    version = "1.18"
 
     rm_server("test", confirm=True)
 

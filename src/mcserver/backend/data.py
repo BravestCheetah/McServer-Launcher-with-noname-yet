@@ -7,7 +7,7 @@ from mcserver.settings import SOFTWARE_DATA_FILE, SERVER_DATA_FILE
 
 
 @cache
-def get_software_data():
+def get_software_data() -> dict:
     with open(SOFTWARE_DATA_FILE, "r") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
     return data["softwares"]
