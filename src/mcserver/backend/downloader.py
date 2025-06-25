@@ -78,7 +78,7 @@ class VanillaDownloader(ServerDownloader):
 class PaperDownloader(ServerDownloader):
     def get_release_data(self, version: str) -> dict:
 
-        data_url = get_software_metadata["paper"]["versions-data"]
+        data_url = get_software_metadata()["paper"]["versions-data"]
 
         ver_data_url = f"{data_url}{version}"
         ver_data = self.get_json(ver_data_url)

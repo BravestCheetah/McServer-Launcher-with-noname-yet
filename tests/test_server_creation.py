@@ -9,7 +9,10 @@ def test_server_creation():
     software = "paper"
     version = "1.18"
 
-    rm_server("test", confirm=True)
+    try:
+        rm_server("test", confirm=True)
+    except Exception:
+        pass
 
     server = Server(name="test", motd="testing server", software=software, version=version)
     server.install_server()
