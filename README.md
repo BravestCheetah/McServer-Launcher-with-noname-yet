@@ -1,8 +1,8 @@
 ## Notice
 Notice: The Project Is Still In Very Early Developement And Right Now This README is made to inform the developers on how to contribute and use the tools the project uses. This README will be updated to installation and setup guide when we are in the stage of developement where its working. Right now the project can not be used for its purpouse and were far from it, but were hoping that we can make this happen and contribution is always welcome :)
 
-# McServer Launcher
-A Launcher And Manager For Vanilla and modified Minecraft Server
+# StructureBlock
+A Launcher And Manager For Vanilla and modified Minecraft Servers
 
 ## Running
 
