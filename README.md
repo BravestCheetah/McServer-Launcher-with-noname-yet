@@ -1,51 +1,36 @@
-## Notice
-Notice: The Project Is Still In Very Early Developement And Right Now This README is made to inform the developers on how to contribute and use the tools the project uses. This README will be updated to installation and setup guide when we are in the stage of developement where its working. Right now the project can not be used for its purpouse and were far from it, but were hoping that we can make this happen and contribution is always welcome :)
-
 # StructureBlock
-A Launcher And Manager For Vanilla and modified Minecraft Servers
 
-## Running
+## Notice
+The Project Is Still In Early Developement And is not Useable in its current state, if you wanna use StructureBlock to manage your servers you can add BravestCheetah on discord and request to get pinged when we are ready to release the first test release!
 
-First, make sure you have [uv](https://docs.astral.sh/uv) installed, then simply
-execute it with:
+This README is incomplete and mostly only contains notes for developers at the moment as the project is not ready for releases yet.
 
-```bash
-uv run main.py
-```
+## Installation
+Sadly there arent any versions of StructureBlock yet but we are planning on releasing it using docker for ease of installation sometime in the near future.
 
-The embedded server should start the application on http://localhost:8080.
+## How To Use
+This section will be written when we release the projects first release
 
+## How To Contribute
 
-**Note**: If you use the numeric IP address (like 127.0.0.1) instead of `localhost` some
-CSS might fail to load depending on your browser, so make sure you're using `localhost`.
+### Setup
+First of all clone the repository using git:
+`git clone https://github.com/BravestCheetah/StructureBlock`
 
-## Developing
+Then to contribute to the project you need some dependencies:
+* Python
+* uv
 
-The embedded server has live-reload enabled, so any changes made to `main.py`
-should be automatically reflected in the open webpage. To develop locally you need
-to make sure the package is installed on edit mode:
+All other dependencies will be installed by uv automatically when needed to create a developement enviorment where all users will have the same enviorment to prevent different enviorment from breaking other.
 
-```bash
-uv sync
-```
+Then to install dependencies with uv you will have to run:
+`uv sync`
+in the root of the repository.
 
-For development, there's also the option of running just the `cli` for quickly
-executing specific servers, to do so use `uv's` support for scripts and provide
-the required parameters as such:
+### Tests
+To run tests (to check functionality on backend) run
+`uv run pytest`
+and lastly to create tests just create them following the [pytest docs](https://docs.pytest.org/en/stable/) in `/tests` named well to not confuse other developers.
 
-```bash
-uv run mcserver --name potato --software vanilla --version 1.21.6
-```
-
-
-### Testing
-
-Tests are implemented using [pytest](https://docs.pytest.org/en/stable/) and
-can be executed with:
-
-```bash
-uv run pytest
-```
-
-**NOTE**: some tests will download content from the Internet into your machine,
-make sure you have the disk space and permissions to write them or they will fail
+### Pushing
+To push please put your commits in a pull request which will be reviewed by one of the head developers and merged if no conflicts emerge, if the changes are confirmed but has conflicts the contributor is requested to fix these conflicts before being merged into main.
