@@ -2,7 +2,7 @@ from functools import cache
 import yaml
 from slugify import slugify
 
-from mcserver.errors import ServerAlreadyExistsError
+from mcserver.errors import ServerAlreadyExistsError, ServerDeleteNoConfirm
 from mcserver.settings import SOFTWARE_DATA_FILE, SERVER_DATA_FILE
 
 
@@ -71,6 +71,14 @@ def add_server(name, motd, version, software) -> None:
 
     save_server_data(data)
 
+def rm_server(name: str, confirm: bool = False) -> None:
+    if confirm:
+        data = load_server_data()
+        data.pop(name)
+        save_server_data(data)
+        return
+    
+    raise ServerDeleteNoConfirm("Server Deletion Failed, Confirmation False")
 
 def edit_server(name, key, value) -> None:
 

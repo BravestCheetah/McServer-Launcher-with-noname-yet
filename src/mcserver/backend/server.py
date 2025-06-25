@@ -45,6 +45,11 @@ class Server:
         with open(eula_path, "w") as f:
             f.write("eula=true")
         
+        properties_path = self.path / "server.properties"
+
+        with open(properties_path, "w") as f:
+            f.write(f"motd={self.motd}")
+        
         add_server(self.name, self.motd, self.version, self.software)
 
     def start_server(self):

@@ -8,4 +8,4 @@ softwares:
   leaf:
     leaf-data: https://api.leafmc.one/v2/projects/leaf/
     version-data: https://api.leafmc.one/v2/projects/leaf/versions/
-    
+
