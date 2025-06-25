@@ -2,6 +2,7 @@ import platform
 import signal
 import subprocess
 import pathlib
+import shutil
 
 from slugify import slugify
 
@@ -56,7 +57,7 @@ class Server:
         add_server(self.name, self.motd, self.version, self.software)
 
     def uninstall_server(self):
-        pathlib.Path.rmdir(self.path)
+        shutil.rmtree(self.path)
 
     def start_server(self):
         self.process = subprocess.run(["java", "-jar", "server.jar"], cwd=self.path)
