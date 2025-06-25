@@ -14,7 +14,7 @@ def test_server_creation():
     except Exception:
         pass
 
-    server = Server(name="test", motd="testing server", software=software, version=version)
+    server = Server("test", motd="testing server", software=software, version=version)
     server.install_server()
 
     desired_data = {

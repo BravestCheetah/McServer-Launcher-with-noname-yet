@@ -53,7 +53,7 @@ def save_server_data(data) -> dict:
 def add_server(disp_name, motd, version, software) -> None:
 
     data = load_server_data()
-    name = slugify(name)
+    name = slugify(disp_name)
 
     if name in data:
         raise ServerAlreadyExistsError("There was an error adding a server to the server metadata: Server Already Exists")

@@ -7,7 +7,7 @@ def create_server(name, motd, software, version) -> Server:
         raise ServerAlreadyExistsError
         return
 
-    server = Server(software=software, version=version, name=name, motd=motd)
+    server = Server(software, version, name, motd)
     server.install_server()
     
     return server
@@ -21,7 +21,7 @@ def load_server(name) -> Server:
     raise ServerDoesNotExistError
 
 def delete_server(name) -> None:
-    
+
     server = load_server(name)
     rm_server(server, confirm=True)
     server.uninstall_server()
