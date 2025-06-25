@@ -23,6 +23,6 @@ def load_server(name) -> Server:
 def delete_server(name) -> None:
 
     server = load_server(name)
-    rm_server(server, confirm=True)
+    rm_server(name, confirm=True)
     server.uninstall_server()
     
