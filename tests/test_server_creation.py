@@ -18,8 +18,8 @@ def test_server_creation():
     server.install_server()
 
     desired_data = {
-        "name": "test",
-        "motd": "testing server",
+        "disp_name": "test",
+        "motd": "motd",
         "version": version,
         "software": software,
     }

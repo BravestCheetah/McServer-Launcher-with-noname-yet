@@ -30,7 +30,7 @@ def load_server_data() -> dict:
     if data == None:
         data = {
             "my-awesome-server": {
-            "name": "My Awesome Server!",
+            "disp_name": "My Awesome Server!",
             "motd": "This is my MOTD",
             "version": "1.19.2",
             "software": "vanilla", 
