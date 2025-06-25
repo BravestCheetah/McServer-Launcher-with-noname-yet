@@ -77,12 +77,8 @@ class PaperDownloader(ServerDownloader):
     def get_url(self, version: str) -> str:
         data_url = self.download_data["softwares"]["paper"]["versions-data"]
 
-        ver_data_url = f"{data_url}{version}"
-        ver_data = self.get_json(ver_data_url)
-
-        latest_build = ver_data["builds"][-1]
-        build_info_url = f"{data_url}{version}/builds/{latest_build}"
-        build_info = self.get_json(build_info_url)
+        build_info = self.get_release_data()
+        latest_build = build_info["builds"][-1]
 
         build_name = build_info["downloads"]["application"]["name"]
         build_download = f"{data_url}{version}/builds/{latest_build}/downloads/{build_name}"
