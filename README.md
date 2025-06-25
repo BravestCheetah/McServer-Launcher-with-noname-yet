@@ -1,5 +1,6 @@
-# StructureBlock
+# StructureBlock 
 
+![logo](Structure_Block.png)
 ## Notice
 The Project Is Still In Early Developement And is not Useable in its current state, if you wanna use StructureBlock to manage your servers you can add BravestCheetah on discord and request to get pinged when we are ready to release the first test release!
 
