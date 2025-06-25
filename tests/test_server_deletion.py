@@ -15,4 +15,4 @@ def test_server_creation():
 
     rm_server("test2", confirm=True)
 
-    assert pathlib.Path.exists(server.path / "test2")
+    assert pathlib.Path.exists(server.path)

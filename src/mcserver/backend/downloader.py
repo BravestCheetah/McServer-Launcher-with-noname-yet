@@ -78,7 +78,7 @@ class VanillaDownloader(ServerDownloader):
 class PaperDownloader(ServerDownloader):
     def get_release_data(self, version: str) -> dict:
 
-        data_url = get_software_metadata()["paper"]["versions-data"]
+        data_url = get_software_metadata("paper")["versions-data"]
 
         ver_data_url = f"{data_url}{version}"
         ver_data = self.get_json(ver_data_url)
@@ -87,7 +87,7 @@ class PaperDownloader(ServerDownloader):
         build_info_url = f"{data_url}{version}/builds/{latest_build}"
 
         build_info = self.get_json(build_info_url)
-        return build_info
+        return build_info, latest_build
 
 
     def get_url(self, version: str) -> str:
@@ -98,10 +98,9 @@ class PaperDownloader(ServerDownloader):
         return build_download url
         """
 
-        data_url = get_software_metadata["paper"]["versions-data"]
+        data_url = get_software_metadata("paper")["versions-data"]
 
-        build_info = self.get_release_data(version)
-        latest_build = build_info["builds"][-1]
+        build_info, latest_build = self.get_release_data(version)
 
         build_name = build_info["downloads"]["application"]["name"]
         build_download = f"{data_url}{version}/builds/{latest_build}/downloads/{build_name}"
@@ -112,7 +111,7 @@ class PaperDownloader(ServerDownloader):
 
 class LeafDownloader(ServerDownloader):
     def get_release_data(self, version: str) -> dict:
-        data_url = get_software_metadata["leaf"]["versions-data"]
+        data_url = get_software_metadata("leaf")["versions-data"]
 
         ver_data_url = f"{data_url}{version}"
         ver_data = self.get_json(ver_data_url)
@@ -132,7 +131,7 @@ class LeafDownloader(ServerDownloader):
         return build_download url
         """
 
-        data_url = get_software_metadata["leaf"]["versions-data"]
+        data_url = get_software_metadata("leaf")["versions-data"]
 
         build_info = self.get_release_data(version)
         latest_build = build_info["builds"][-1]
