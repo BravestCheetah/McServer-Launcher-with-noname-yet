@@ -44,7 +44,7 @@ def load_server_data() -> dict:
 def save_server_data(data) -> dict:
     
     with open(SERVER_DATA_FILE, "w") as f:
-        data = yaml.dump(f)
+        yaml.dump(data, f)
 
 
 

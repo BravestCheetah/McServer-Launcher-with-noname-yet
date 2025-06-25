@@ -2,6 +2,8 @@ data/servers
 .vscode
 .envrc
 test.py
+servers.yaml
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
