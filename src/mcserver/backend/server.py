@@ -1,6 +1,7 @@
 import platform
 import signal
 import subprocess
+import pathlib
 
 from slugify import slugify
 
@@ -14,20 +15,22 @@ class Server:
         self,
         software: str,
         version: str,
-        name: str,
+        disp_name: str,
         motd: str = "",
     ) -> None:
-        
-        self.name = name
+
         self.motd = motd
         self.software = software
         self.version = version
+
+        self.disp_name = disp_name
+        self.name = slugify(self.disp_name)
 
         # self.server_data = data()
 
     @property
     def path(self):
-        return SERVER_ROOT / slugify(self.name)
+        return SERVER_ROOT / self.name
 
     @property
     def jar_file(self):
@@ -51,6 +54,9 @@ class Server:
             f.write(f"motd={self.motd}")
         
         add_server(self.name, self.motd, self.version, self.software)
+
+    def uninstall_server(self):
+        pathlib.Path.rmdir(self.path)
 
     def start_server(self):
         self.process = subprocess.run(["java", "-jar", "server.jar"], cwd=self.path)

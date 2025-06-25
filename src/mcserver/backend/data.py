@@ -50,18 +50,19 @@ def save_server_data(data) -> dict:
 
 #   NOTICE TO DEVS: TO MAKE IT EASIER TO QUICKLY EDIT DIFFERENT THINGS ALL EDITS START WITH A COMPLETE LOAD AND END IN A COMPLETE SAVE.
 
-def add_server(name, motd, version, software) -> None:
+def add_server(disp_name, motd, version, software) -> None:
 
     data = load_server_data()
+    name = slugify(name)
 
-    if slugify(name) in data:
+    if name in data:
         raise ServerAlreadyExistsError("There was an error adding a server to the server metadata: Server Already Exists")
         return
     
-    data_name = slugify(name)
+    data_name = name
 
     server_data = {
-        "name": name,
+        "disp_name": disp_name,
         "motd": motd,
         "version": version,
         "software": software,
