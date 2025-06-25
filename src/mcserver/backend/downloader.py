@@ -1,14 +1,25 @@
 import pathlib
-
 import requests
 
 from mcserver.backend.data import get_software_metadata
-from mcserver.errors import UnknownSoftwareError, UnknownVersionError
+from mcserver.errors import UnknownSoftwareError, UnknownVersionError, RequestJsonFailedError
 
 
 class ServerDownloader:
     def get_url(self, version: str) -> str:
         raise NotImplementedError
+    
+
+    def get_json(self, url: str) -> dict:
+        resp = requests.get(url)
+
+        if resp.ok:
+            return resp.json()
+        else:
+            raise RequestJsonFailedError(
+                f"An Error Occured When Getting JSON From Url {url}"
+            )
+            return {}
 
     def download(self, version: str, path: pathlib.Path) -> pathlib.Path:
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -50,18 +61,31 @@ class VanillaDownloader(ServerDownloader):
         return release_manifest["downloads"]["server"]["url"]
 
 class PaperDownloader(ServerDownloader):
-    def get_url(self, version: str):
-        data_url = self.download_data["softwares"]["paper"]["versions-data"]
+    def get_release_data(self, manifest: dict, version: str) -> dict:
+        data_url = get_software_metadata["versions-data"]
 
-        ver_data_url = f"{data_url}{ver}"
+        ver_data_url = f"{data_url}{version}"
         ver_data = self.get_json(ver_data_url)
 
         latest_build = ver_data["builds"][-1]
-        build_info_url = f"{data_url}{ver}/builds/{latest_build}"
+        build_info_url = f"{data_url}{version}/builds/{latest_build}"
+
+        build_info = self.get_json(build_info_url)
+        return build_info
+
+
+    def get_url(self, version: str) -> str:
+        data_url = self.download_data["softwares"]["paper"]["versions-data"]
+
+        ver_data_url = f"{data_url}{version}"
+        ver_data = self.get_json(ver_data_url)
+
+        latest_build = ver_data["builds"][-1]
+        build_info_url = f"{data_url}{version}/builds/{latest_build}"
         build_info = self.get_json(build_info_url)
 
         build_name = build_info["downloads"]["application"]["name"]
-        build_download = f"{data_url}{ver}/builds/{latest_build}/downloads/{build_name}"
+        build_download = f"{data_url}{version}/builds/{latest_build}/downloads/{build_name}"
 
         return build_download
 
