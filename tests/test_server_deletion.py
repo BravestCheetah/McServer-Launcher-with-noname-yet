@@ -16,4 +16,4 @@ def test_server_creation():
     
     delete_server("deletiontest")
 
-    assert pathlib.Path.exists(server.path)
+    assert not pathlib.Path.exists(server.path)

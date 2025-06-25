@@ -7,7 +7,7 @@ def test_vanilla_jar_download():
     software = "vanilla"
     version = "1.21.6"
     sha1 = "6e64dcabba3c01a7271b4fa6bd898483b794c59b"
-    server = Server("test", software=software, version=version)
+    server = Server(software, version, "test server", "motd")
     server.download_jar()
 
     with open(server.jar_file, "rb") as f:
