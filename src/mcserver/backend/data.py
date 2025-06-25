@@ -91,5 +91,3 @@ def edit_server(name, key, value) -> None:
 def get_servers() -> list:
     data = load_server_data()
     return list(data.keys())
-
-print(get_servers())
