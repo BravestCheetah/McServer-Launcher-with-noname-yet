@@ -2,7 +2,7 @@ import hashlib
 
 
 def test_vanilla_jar_download():
-    from src.mcserver.backend.server import Server
+    from mcserver.backend.server import Server
 
     software = "vanilla"
     version = "1.21.6"

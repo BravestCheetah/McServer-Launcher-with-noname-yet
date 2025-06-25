@@ -26,6 +26,17 @@ def load_server_data() -> dict:
 
     with open(SERVER_DATA_FILE, "r") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
+    
+    if data == None:
+        data = {
+            "my-awesome-server": {
+            "name": "My Awesome Server!",
+            "motd": "This is my MOTD",
+            "version": "1.19.2",
+            "software": "vanilla", 
+            }
+
+        }
 
     return data
 
@@ -34,6 +45,7 @@ def save_server_data(data) -> dict:
     
     with open(SERVER_DATA_FILE, "w") as f:
         data = yaml.dump(f)
+
 
 
 #   NOTICE TO DEVS: TO MAKE IT EASIER TO QUICKLY EDIT DIFFERENT THINGS ALL EDITS START WITH A COMPLETE LOAD AND END IN A COMPLETE SAVE.
@@ -61,7 +73,7 @@ def add_server(name, motd, version, software) -> None:
 
 
 def edit_server(name, key, value) -> None:
-    
+
     data = load_server_data()
 
     data[name][key] = value

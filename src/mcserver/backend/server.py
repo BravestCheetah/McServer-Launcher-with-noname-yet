@@ -6,6 +6,7 @@ from slugify import slugify
 
 from mcserver.backend.downloader import get_downloader
 from mcserver.settings import SERVER_ROOT
+from mcserver.backend.data import add_server, edit_server
 
 
 class Server:
@@ -43,6 +44,8 @@ class Server:
 
         with open(eula_path, "w") as f:
             f.write("eula=true")
+        
+        add_server(self.name, self.motd, self.version, self.software)
 
     def start_server(self):
         self.process = subprocess.run(["java", "-jar", "server.jar"], cwd=self.path)
