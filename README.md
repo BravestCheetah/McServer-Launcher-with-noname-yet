@@ -34,3 +34,7 @@ and lastly to create tests just create them following the [pytest docs](https://
 
 ### Pushing
 To push please put your commits in a pull request which will be reviewed by one of the head developers and merged if no conflicts emerge, if the changes are confirmed but has conflicts the contributor is requested to fix these conflicts before being merged into main.
+
+## Forking
+You are allowed to fork the project and redistribute it if you credit the original project - this one :) - and the developers of this project. 
+You are NOT allowed to fork and/or redistribute the project and claiming it as your own or redistributing it without changing it, we encourage you to make this project your own! This is supposed to be an amazing project, but if you try to make it your own, you can make it even better! Dont copy, thats not fun for anyone :(
