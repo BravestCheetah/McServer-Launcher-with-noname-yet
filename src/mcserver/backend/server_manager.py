@@ -18,7 +18,7 @@ def load_server(name) -> Server:
         server = Server(server_data["software"], server_data["version"], server_data["disp_name"], server_data["motd"])
         return server
 
-    raise ServerDoesNotExistError
+    raise ServerDoesNotExistError(f"Server '{name}' tried to load but was not found.")
 
 def delete_server(name) -> None:
 
