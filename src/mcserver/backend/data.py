@@ -8,7 +8,7 @@ from mcserver.settings import SOFTWARE_DATA_FILE, SERVER_DATA_FILE
 
 @cache
 def get_software_data() -> dict:
-    with open(SOFTWARE_DATA_FILE, "r") as f:
+    with open(SOFTWARE_DATA_FILE, "a+") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
     return data["softwares"]
 
@@ -24,7 +24,7 @@ def get_software_metadata(software: str) -> dict:
 
 def load_server_data() -> dict:
 
-    with open(SERVER_DATA_FILE, "r") as f:
+    with open(SERVER_DATA_FILE, "a+") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
     
     if data == None:
