@@ -14,5 +14,3 @@ SERVER_DATA_FILE = (
 SERVER_ROOT = (
     ROOT / "data" / "servers"
 )
-
-print(SOFTWARE_DATA_FILE)
