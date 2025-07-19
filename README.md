@@ -17,6 +17,7 @@ This section will be written when we release the projects first release
 
 ### Setup
 First of all clone the repository using git:
+
 `git clone https://github.com/BravestCheetah/StructureBlock`
 
 Then to contribute to the project you need some dependencies:
