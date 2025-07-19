@@ -3,7 +3,7 @@ import yaml
 from slugify import slugify
 
 from mcserver.errors import ServerAlreadyExistsError, ServerDeleteNoConfirm
-from mcserver.settings import SOFTWARE_DATA_FILE, SERVER_DATA_FILE
+from mcserver.settings import SOFTWARE_DATA_FILE, ROOT
 
 
 @cache
@@ -22,28 +22,21 @@ def get_software_metadata(software: str) -> dict:
 
 
 
-def load_server_data() -> dict:
+def load_server_data(server) -> dict:
 
-    with open(SERVER_DATA_FILE, "a+") as f:
+    data_path = ROOT / "data" / "servers" / server / ".StructureBlock" / "data.yaml"
+
+    with open(data_path, "a+") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
-    
-    if data == None:
-        data = {
-            "my-awesome-server": {
-            "disp_name": "My Awesome Server!",
-            "motd": "This is my MOTD",
-            "version": "1.19.2",
-            "software": "vanilla", 
-            }
-
-        }
 
     return data
 
 
-def save_server_data(data) -> dict:
+def save_server_data(server, data) -> dict:
     
-    with open(SERVER_DATA_FILE, "w") as f:
+    data_path = ROOT / "data" / "servers" / server / ".StructureBlock" / "data.yaml"
+
+    with open(data_path, "w") as f:
         yaml.dump(data, f)
 
 
