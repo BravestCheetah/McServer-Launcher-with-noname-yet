@@ -7,9 +7,6 @@ ROOT = (
 SOFTWARE_DATA_FILE = (
     ROOT / "data" / "meta" / "software.yaml"
 )
-SERVER_DATA_FILE = (
-    ROOT / "data" / "meta" / "servers.yaml"
-)
 
 SERVER_ROOT = (
     ROOT / "data" / "servers"
