@@ -75,12 +75,12 @@ def rm_server(name: str, confirm: bool = False) -> None:
 
 def edit_server(name, key, value) -> None:
 
-    data = load_server_data()
+    data = load_server_data(name)
 
-    data[name][key] = value
+    data[key] = value
 
-    save_server_data(data)
-
+    save_server_data(name, data)
+    
 def get_servers() -> list:
-    data = load_server_data()
-    return list(data.keys())
+
+    servers = [f.name for f in SERVER_DATA.iterdir() if f.is_dir()]
