@@ -3,7 +3,7 @@ import yaml
 from slugify import slugify
 
 from mcserver.errors import ServerAlreadyExistsError, ServerDeleteNoConfirm
-from mcserver.settings import SOFTWARE_DATA_FILE, ROOT
+from mcserver.settings import SOFTWARE_DATA_FILE, SERVER_DATA
 
 
 @cache
@@ -24,7 +24,7 @@ def get_software_metadata(software: str) -> dict:
 
 def load_server_data(server) -> dict:
 
-    data_path = ROOT / "data" / "servers" / server / ".StructureBlock" / "data.yaml"
+    data_path = SERVER_DATA / server / ".StructureBlock" / "data.yaml"
 
     with open(data_path, "a+") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
@@ -34,7 +34,7 @@ def load_server_data(server) -> dict:
 
 def save_server_data(server, data) -> dict:
     
-    data_path = ROOT / "data" / "servers" / server / ".StructureBlock" / "data.yaml"
+    data_path = SERVER_DATA / server / ".StructureBlock" / "data.yaml"
 
     with open(data_path, "w") as f:
         yaml.dump(data, f)
@@ -45,14 +45,11 @@ def save_server_data(server, data) -> dict:
 
 def add_server(disp_name, motd, version, software) -> None:
 
-    data = load_server_data()
     name = slugify(disp_name)
 
-    if name in data:
+    if pathlib.Path.Exists(SERVER_DATA / name):
         raise ServerAlreadyExistsError("There was an error adding a server to the server metadata: Server Already Exists")
         return
-    
-    data_name = name
 
     server_data = {
         "disp_name": disp_name,
@@ -61,9 +58,7 @@ def add_server(disp_name, motd, version, software) -> None:
         "software": software,
     }
 
-    data[data_name] = server_data
-
-    save_server_data(data)
+    save_server_data(name, data)
 
 def rm_server(name: str, confirm: bool = False) -> None:
     if confirm:
