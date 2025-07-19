@@ -2,7 +2,7 @@ from functools import cache
 import yaml
 from slugify import slugify
 
-from mcserver.errors import ServerAlreadyExistsError, ServerDeleteNoConfirm
+from mcserver.errors import ServerAlreadyExistsError, ServerDeleteNoConfirm, ServerDoesNotExistError
 from mcserver.settings import SOFTWARE_DATA_FILE, SERVER_DATA
 
 
@@ -62,10 +62,14 @@ def add_server(disp_name, motd, version, software) -> None:
 
 def rm_server(name: str, confirm: bool = False) -> None:
     if confirm:
-        data = load_server_data()
-        data.pop(name)
-        save_server_data(data)
-        return
+        if os.Path.Exists(SERVER_DATA / name):
+
+            server_path = Path(SERVER_DATA / name)
+            server_path.rmdir()
+
+            return
+        
+        raise ServerDoesNotExistError("Server Deletion Failed, Server Not Found")
     
     raise ServerDeleteNoConfirm("Server Deletion Failed, Confirmation False")
 
