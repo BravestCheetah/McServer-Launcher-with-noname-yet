@@ -65,7 +65,7 @@ def add_server(disp_name, motd, version, software) -> None:
 
 def rm_server(name: str, confirm: bool = False) -> None:
     if confirm:
-        if os.Path.Exists(SERVER_DATA / name):
+        if pathlib.Path.Exists(SERVER_DATA / name):
 
             server_path = Path(SERVER_DATA / name)
             server_path.rmdir()
