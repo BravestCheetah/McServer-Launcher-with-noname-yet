@@ -69,7 +69,6 @@ def rm_server(name: str, confirm: bool = False) -> None:
 
             server_path = Path(SERVER_DATA / name)
             server_path.rmdir()
-
             return
         
         raise ServerDoesNotExistError("Server Deletion Failed, Server Not Found")
