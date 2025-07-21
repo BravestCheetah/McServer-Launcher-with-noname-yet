@@ -48,9 +48,11 @@ def add_server(disp_name, motd, version, software) -> None:
 
     name = slugify(disp_name)
 
-    if pathlib.Path.exists(SERVER_DATA / name / ".structureblock"):
+    if pathlib.Path.exists(SERVER_DATA / name / ".StructureBlock"):
         raise ServerAlreadyExistsError("There was an error adding a server to the server metadata: Server Already Exists")
         return
+    
+    pathlib.Path.mkdir(SERVER_DATA / name / ".StructureBlock")
 
     server_data = {
         "disp_name": disp_name,
@@ -59,7 +61,7 @@ def add_server(disp_name, motd, version, software) -> None:
         "software": software,
     }
 
-    save_server_data(name, data)
+    save_server_data(name, server_data)
 
 def rm_server(name: str, confirm: bool = False) -> None:
     if confirm:
