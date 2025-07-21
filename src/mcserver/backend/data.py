@@ -1,6 +1,7 @@
 from functools import cache
 import yaml
 from slugify import slugify
+import pathlib
 
 from mcserver.errors import ServerAlreadyExistsError, ServerDeleteNoConfirm, ServerDoesNotExistError
 from mcserver.settings import SOFTWARE_DATA_FILE, SERVER_DATA
@@ -47,7 +48,7 @@ def add_server(disp_name, motd, version, software) -> None:
 
     name = slugify(disp_name)
 
-    if pathlib.Path.Exists(SERVER_DATA / name):
+    if pathlib.Path.exists(SERVER_DATA / name):
         raise ServerAlreadyExistsError("There was an error adding a server to the server metadata: Server Already Exists")
         return
 
