@@ -18,8 +18,10 @@ def load_server(name) -> Server:
     servers = get_servers()
     if servers:
         if name in servers:
-            server_data = load_server_data()
+            server_data = load_server_data(name)
+
             server = Server(server_data["software"], server_data["version"], server_data["disp_name"], server_data["motd"])
+            
             return server
 
     raise ServerDoesNotExistError(f"Server '{name}' tried to load but was not found.")

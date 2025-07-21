@@ -87,3 +87,4 @@ def edit_server(name, key, value) -> None:
 def get_servers() -> list:
 
     servers = [f.name for f in SERVER_DATA.iterdir() if f.is_dir()]
+    return servers
