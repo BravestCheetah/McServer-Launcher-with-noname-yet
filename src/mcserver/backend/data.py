@@ -2,6 +2,7 @@ from functools import cache
 import yaml
 from slugify import slugify
 import pathlib
+from shutil import rmtree
 
 from mcserver.errors import ServerAlreadyExistsError, ServerDeleteNoConfirm, ServerDoesNotExistError
 from mcserver.settings import SOFTWARE_DATA_FILE, SERVER_DATA
@@ -67,8 +68,7 @@ def rm_server(name: str, confirm: bool = False) -> None:
     if confirm:
         if pathlib.Path.exists(SERVER_DATA / name):
 
-            server_path = pathlib.Path(SERVER_DATA / name)
-            server_path.rmdir()
+            rmtree(SERVER_DATA / name)
             return
         
         raise ServerDoesNotExistError("Server Deletion Failed, Server Not Found")
