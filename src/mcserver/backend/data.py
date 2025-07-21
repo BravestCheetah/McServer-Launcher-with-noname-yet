@@ -27,7 +27,7 @@ def load_server_data(server) -> dict:
 
     data_path = SERVER_DATA / server / ".StructureBlock" / "data.yaml"
 
-    with open(data_path, "a+") as f:
+    with open(data_path, "r") as f:
         data = yaml.load(f, Loader=yaml.FullLoader)
 
     return data
