@@ -67,7 +67,7 @@ def rm_server(name: str, confirm: bool = False) -> None:
     if confirm:
         if pathlib.Path.exists(SERVER_DATA / name):
 
-            server_path = Path(SERVER_DATA / name)
+            server_path = pathlib.Path(SERVER_DATA / name)
             server_path.rmdir()
             return
         
