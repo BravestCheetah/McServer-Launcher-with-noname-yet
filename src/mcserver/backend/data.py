@@ -85,5 +85,12 @@ def edit_server(name, key, value) -> None:
     
 def get_servers() -> list:
 
+    if not pathlib.Path.exists(SERVER_DATA):
+        pathlib.Path.mkdir(SERVER_DATA)
+
     servers = [f.name for f in SERVER_DATA.iterdir() if f.is_dir()]
     return servers
+
+def get_server_disp(name) -> str:
+
+    return load_server_data(name)["disp_name"]

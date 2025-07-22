@@ -46,12 +46,22 @@ class TemplateDownloader(ServerDownloader):
 
 
 class VanillaDownloader(ServerDownloader):
+
     def get_release_data(self, manifest: dict, version: str) -> dict:
         for v in manifest["versions"]:
             if v["id"] == version:
                 return v
         else:
             raise UnknownVersionError(version)
+
+
+    def get_versions(self):
+
+        data_url = get_software_metadata("vanilla")["version-manifest"]
+
+        data = self.get_json(data_url)
+
+        return list(version["id"] for version in data["versions"] if version["type"] == "release")
 
 
     def get_url(self, version: str) -> str:
@@ -76,6 +86,7 @@ class VanillaDownloader(ServerDownloader):
 
 
 class PaperDownloader(ServerDownloader):
+
     def get_release_data(self, version: str) -> dict:
 
         data_url = get_software_metadata("paper")["versions-data"]
@@ -88,6 +99,15 @@ class PaperDownloader(ServerDownloader):
 
         build_info = self.get_json(build_info_url)
         return build_info, latest_build
+    
+
+    def get_versions(self):
+
+        data_url = get_software_metadata("paper")["paper-data"]
+
+        data = self.get_json(data_url)
+
+        return data["versions"][::-1]
 
 
     def get_url(self, version: str) -> str:
@@ -110,6 +130,7 @@ class PaperDownloader(ServerDownloader):
 
 
 class LeafDownloader(ServerDownloader):
+
     def get_release_data(self, version: str) -> dict:
         data_url = get_software_metadata("leaf")["versions-data"]
 
@@ -121,6 +142,15 @@ class LeafDownloader(ServerDownloader):
 
         build_info = self.get_json(build_info_url)
         return build_info, latest_build
+
+
+    def get_versions(self):
+
+        data_url = get_software_metadata("leaf")["leaf-data"]
+
+        data = self.get_json(data_url)
+
+        return data["versions"][::-1]
 
 
     def get_url(self, version: str) -> str:
@@ -147,7 +177,8 @@ class LeafDownloader(ServerDownloader):
 DOWNLOADERS = {
     "vanilla": VanillaDownloader,
     "paper": PaperDownloader,
-    "leaf": LeafDownloader,
+    #"leaf": LeafDownloader,
+    # LeafMC removed as its api requests fails
 }
 
 

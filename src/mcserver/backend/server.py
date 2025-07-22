@@ -54,7 +54,7 @@ class Server:
         with open(properties_path, "w") as f:
             f.write(f"motd={self.motd}")
         
-        add_server(self.name, self.motd, self.version, self.software)
+        add_server(self.disp_name, self.motd, self.version, self.software)
 
     def uninstall_server(self):
         shutil.rmtree(self.path)
