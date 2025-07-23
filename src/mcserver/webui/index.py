@@ -4,7 +4,7 @@ import src.mcserver.gui_interface
 
 from src.mcserver.backend.data import get_servers, get_server_disp, get_software_data
 from src.mcserver.backend.downloader import get_downloader
-from src.mcserver.backend.server_manager import delete_server
+from src.mcserver.backend.server_manager import delete_server, create_server
 
 
 selected_server = None
@@ -45,18 +45,34 @@ def render(debug: bool = False):
                     ui.label("Create A New Server")
 
                     with ui.row().classes("w-full"):
-                        pass
+                        ui.label("Server Name: ")
+                        ui.space()
+                        name_input = ui.input(value="My Awesome Server")
                     
                     with ui.row().classes("w-full"):
-                        pass
+                        ui.label("MOTD (server description): ")
+                        ui.space()
+                        motd_input = ui.input(value="Server Created With StructureBlock")
 
                     with ui.row().classes("w-full items-center"):
                         ui.label("Software: ")
+                        ui.space()
                         software_select = ui.select(list(get_software_data().keys()), value=list(get_software_data().keys())[0], on_change=software_update)
 
                     with ui.row().classes("w-full"):
                         ui.label("Version: ")
+                        ui.space()
                         version_select = ui.select(list(get_software_data().keys()), value=list(get_software_data().keys())[0])
+                    
+                    def create_server_clicked():
+                        dialog.close()
+                        ui.notification("Creating Server...")
+                        create_server(name_input.value, motd_input.value, software_select.value, version_select.value)
+                        ui.notification("Server Successfully Created! Refreshing Server List...")
+                        software_update()
+                        ui.notification("Server List Successfully Refreshed!")
+
+                    ui.button("Create", on_click=create_server_clicked)
 
                     software_update()
 
