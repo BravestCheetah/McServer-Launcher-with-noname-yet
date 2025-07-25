@@ -1,41 +1,56 @@
-# StructureBlock 
-![logo](Structure_Block.png)
+# StructureBlock
+![GitHub repo size](https://img.shields.io/github/repo-size/BravestCheetah/StructureBlock)
+![GitHub Issues Count](https://img.shields.io/github/issues/BravestCheetah/StructureBlock) 
+![GitHub Repo stars](https://img.shields.io/github/stars/BravestCheetah/StructureBlock?style=flat&color=#fff700) 
+![GitHub watchers](https://img.shields.io/github/watchers/BravestCheetah/StructureBlock?style=flat)
 
-## Notice
-The Project Is Still In Early Developement And is not Useable in its current state, if you wanna use StructureBlock to manage your servers you can add BravestCheetah on discord and request to get pinged when we are ready to release the first test release!
 
-This README is incomplete and mostly only contains notes for developers at the moment as the project is not ready for releases yet.
+## Installation / Usage
+As the project is still in so early developement any build or compiling scripts / ways have yet to be developed, if you are a developer please refer to the section below, if you are a user interested in using the project, remember that you can always come back later when an realease has been created :D
 
-## Installation
-Sadly there arent any versions of StructureBlock yet but we are planning on releasing it using docker for ease of installation sometime in the near future.
 
-## How To Use
-This section will be written when we release the projects first release
+## Developement Enviorment
+### Notice
+The developement process relies on the [git](https://git-scm.com/) ecosystem and githubs integration with it, git is expected to be installed and linked to your github account during the developement process.
+The enviorment is managed by the ![uv](https://github.com/astral-sh/uv) application which is also excpected to be installed before starting the developement process.
 
-## How To Contribute
+### Presetup
+The first thing to do is cloning the repository, navigate to an appropriate directory and run the following command: 
 
-### Setup
-First of all clone the repository using git:
+``git clone https://github.com/BravestCheetah/StructureBlock``
 
-`git clone https://github.com/BravestCheetah/StructureBlock`
+and then proceed to navigate into the directory:
 
-Then to contribute to the project you need some dependencies:
-* Python
-* uv
+``cd StructureBlock``
 
-All other dependencies will be installed by uv automatically when needed to create a developement enviorment where all users will have the same enviorment to prevent different enviorment from breaking other.
+the repository is now downloaded and you can begin the setup process!
 
-Then to install dependencies with uv you will have to run:
-`uv sync`
-in the root of the repository.
+### Dependencies
+The project is made in Python and relies heavily on following libraries:
+* Requests (Fetching data such as .jar files from the software sites)
+* Pathlib (A wrapper for the os modules path functions, used all over the project to manage the different servers)
+* NiceGUI (A library allowing you to easily create web based UI for the app)
+* PyTest (The library used to run and create unit tests easily)
 
-### Tests
-To run tests (to check functionality on backend) run
-`uv run pytest`
-and lastly to create tests just create them following the [pytest docs](https://docs.pytest.org/en/stable/) in `/tests` named well to not confuse other developers.
+Note: All required dependencies will be installed automatically when following the next section (Enviorment), you do NOT have to install these dependencies manually or in any other way than the way listed below.
 
-### Pushing
-To push please put your commits in a pull request which will be reviewed by one of the head developers and merged if no conflicts emerge, if the changes are confirmed but has conflicts the contributor is requested to fix these conflicts before being merged into main.
+### Enviorment
+The enviorment is managed by the ![uv](https://github.com/astral-sh/uv) application and all dependencies are managed by uv as well.
+To set up the enviorment run the `uv sync`, this will let uv set up your local enviorment based on the lockfiles, it will install the .env python envoiormnet and required dependencies.
+If any code you add or change require dependencies that are not already installed you can add them to the uv enviorment using `uv pip install <library>`. Do not install dependencies without using uv, this will not save to the uv enviorment and wont be installed by other developers which will end in errors and the libraries installed not being synced accross devices / users.
+
+### Executing Code
+To execute a script using the enviormennt uv manages run it via uv like this: `uv run <your_file>.py`, make sure the code works when being ran with the uv enviorment to ensure it works on others devices too.
+
+### Unit Tests
+Before pushing your code to github, please make sure it passes all unit tests, to run the unit tests start the [PyTest](https://docs.pytest.org/en/stable/) (it will be installed druing the uv enviorment setup) testing process by running `uv run pytest`. To create or edit unit tests, its quite simple, the unit tests are just python files located in the `/tests` directory. PyTest will automatically detect and run the files in the folder following [their documentation](https://docs.pytest.org/en/stable/)
+
+### Pushing your code
+yeah, just... push and create a pull request, the request will be reviewed and if it passes it will be merged :D
+
+### Pulling code
+make sure before pushing to pull (always, just to make sure) and resolve any merging conflicts BEFORE pushing and always rerun the sync command through uv to ensure your enviorment is always up to date to the latest developement enviorment to prevent errors when running newer code.
+
 
 ## Forking
 You are allowed to fork the project and redistribute it if you credit the original project - this one :) - and the developers of this project. 
