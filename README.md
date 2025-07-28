@@ -9,7 +9,7 @@
 As the project is still in so early developement any build or compiling scripts / ways have yet to be developed, if you are a developer please refer to the section below, if you are a user interested in using the project, remember that you can always come back later when an realease has been created :D
 
 
-## Developement Enviorment
+## Developing / Contributing
 ### Notice
 The developement process relies on the [git](https://git-scm.com/) ecosystem and githubs integration with it, git is expected to be installed and linked to your github account during the developement process.
 The enviorment is managed by the ![uv](https://github.com/astral-sh/uv) application which is also excpected to be installed before starting the developement process.
