@@ -78,33 +78,6 @@ def render(debug: bool = False):
 
                 dialog.open()
 
-
-            def reload_servers():
-                server_list_container.clear()
-                servers = [get_server_disp(server) for server in get_servers()]
-
-                for server in servers:
-                    with server_list_container:
-                        with ui.row().classes("w-full"):
-                            ui.label(server)
-                            ui.space()
-                            ui.button("Open", color="blue", on_click=lambda s=server: open_server(s))
-                            ui.button("Delete", color="red", on_click=lambda s=slugify(server): delete_server_popup(s))
-
-            with ui.row().classes("w-full"):
-
-
-                ui.label("Servers")
-                ui.space()
-                ui.button("Refresh", on_click=reload_servers)
-                ui.button("Create", color="green", on_click=create_server_popup)
-
-            ui.separator()
-            server_list_container = ui.column().classes("w-full")
-
-            server_name_label = None
-
-
             def open_server(name: str):
                 global selected_server
 
@@ -112,7 +85,6 @@ def render(debug: bool = False):
                 server_name_label.text = name
                 selected_server = slugify(name)
             
-
             def delete_server_clicked(name: str):
                 global selected_server
 
@@ -125,7 +97,7 @@ def render(debug: bool = False):
 
                 ui.notification(message=f"Server Sucessfully Deleted! Reloading Server List...")
 
-                reload_servers()
+                src.mcserver.gui_interface.reload_servers(delete_server_popup, open_server)
 
                 ui.notification(message="Server list sucessfully reloaded!")
             
@@ -142,8 +114,22 @@ def render(debug: bool = False):
                         ui.button("Delete", color="red", on_click=lambda s=name: delete_server_clicked(s))
                 
                 dialog.open()
+
+
+            with ui.row().classes("w-full"):
+
+                ui.label("Servers")
+                ui.space()
+                ui.button("Refresh", on_click=lambda d=delete_server_popup, o=open_server: src.mcserver.gui_interface.reload_servers(d, o))
+                ui.button("Create", color="green", on_click=create_server_popup)
+
+            ui.separator()
+            src.mcserver.gui_interface.server_list_container = ui.column().classes("w-full")
+
+            server_name_label = None
             
-            reload_servers()
+            
+            src.mcserver.gui_interface.reload_servers(delete_server_popup, open_server)
 
         
         with ui.tab_panel(server_top_tab).classes('w-full'):
