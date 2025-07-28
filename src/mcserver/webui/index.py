@@ -64,29 +64,19 @@ def render(debug: bool = False):
                         ui.space()
                         version_select = ui.select(list(get_software_data().keys()), value=list(get_software_data().keys())[0])
                     
-                    def create_server_clicked():
-                        dialog.close()
+                    def create_server_clicked(popup_dialog):
+                        popup_dialog.close()
                         ui.notification("Creating Server...")
                         create_server(name_input.value, motd_input.value, software_select.value, version_select.value)
                         ui.notification("Server Successfully Created! Refreshing Server List...")
                         software_update()
                         ui.notification("Server List Successfully Refreshed!")
 
-                    ui.button("Create", on_click=create_server_clicked)
+                    ui.button("Create", on_click=lambda d=dialog: create_server_clicked(d))
 
                     software_update()
 
                 dialog.open()
-
-
-            with ui.row().classes("w-full"):
-
-                ui.label("Servers")
-                ui.space()
-                ui.button("Create", color="green", on_click=create_server_popup)
-
-            ui.separator()
-            server_list_container = ui.column().classes("w-full")
 
 
             def reload_servers():
@@ -96,12 +86,21 @@ def render(debug: bool = False):
                 for server in servers:
                     with server_list_container:
                         with ui.row().classes("w-full"):
-
                             ui.label(server)
                             ui.space()
                             ui.button("Open", color="blue", on_click=lambda s=server: open_server(s))
                             ui.button("Delete", color="red", on_click=lambda s=slugify(server): delete_server_popup(s))
 
+            with ui.row().classes("w-full"):
+
+
+                ui.label("Servers")
+                ui.space()
+                ui.button("Refresh", on_click=reload_servers)
+                ui.button("Create", color="green", on_click=create_server_popup)
+
+            ui.separator()
+            server_list_container = ui.column().classes("w-full")
 
             server_name_label = None
 
